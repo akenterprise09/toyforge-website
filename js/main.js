@@ -54,7 +54,7 @@ revealEls.forEach(el=>revObs.observe(el));
   if(!canvas)return;
   let W=window.innerWidth,H=window.innerHeight;
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
   renderer.setClearColor(0,0);
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(60,W/H,.1,200);
@@ -98,8 +98,9 @@ revealEls.forEach(el=>revObs.observe(el));
   const l3=new THREE.PointLight(0xFFD025,2.5,35);l3.position.set(14,6,4);scene.add(l3);
 
   let t=0;
-  (function tick(){
-    requestAnimationFrame(tick);t+=.012;
+  let _raf=null,_inView=true;
+  function tick(){
+    _raf=requestAnimationFrame(tick);t+=.012;
     particles.forEach(p=>{
       const u=p.userData;
       p.rotation.x+=u.rx;p.rotation.y+=u.ry;
@@ -108,7 +109,14 @@ revealEls.forEach(el=>revObs.observe(el));
     l1.position.x=Math.cos(t*.6)*10;l1.position.y=Math.sin(t*.4)*7;
     l2.position.x=Math.cos(t*.5+2)*12;
     renderer.render(scene,camera);
-  })();
+  }
+  _raf=requestAnimationFrame(tick);
+  if(typeof canvas!=='undefined'&&canvas){
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){ if(_raf===null){_raf=requestAnimationFrame(tick);} }
+      else { if(_raf!==null){cancelAnimationFrame(_raf);_raf=null;} }
+    }),{threshold:0}).observe(canvas);
+  }
   window.addEventListener('resize',()=>{
     W=window.innerWidth;H=window.innerHeight;
     renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
@@ -124,7 +132,7 @@ revealEls.forEach(el=>revObs.observe(el));
   const wrap=canvas.parentElement;
   let W=wrap.clientWidth,H=wrap.clientHeight||W;
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
   renderer.setClearColor(0,0);
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   const scene=new THREE.Scene();
@@ -219,15 +227,23 @@ revealEls.forEach(el=>revObs.observe(el));
   },{passive:true});
 
   let t=0;
-  (function tick(){
-    requestAnimationFrame(tick);t+=.014;
+  let _raf=null,_inView=true;
+  function tick(){
+    _raf=requestAnimationFrame(tick);t+=.014;
     if(!isDrag){velX*=.92;velY*=.92;rotX+=velX;rotY+=velY;rotX=Math.max(-.6,Math.min(.8,rotX))}
     if(!isDrag&&Math.abs(velX)<.001&&Math.abs(velY)<.001)rotY+=.006;
     group.rotation.x=rotX;group.rotation.y=rotY;
     group.position.y=Math.sin(t*.5)*.15;
     key.intensity=4.5+Math.sin(t*.7)*.5;
     renderer.render(scene,camera);
-  })();
+  }
+  _raf=requestAnimationFrame(tick);
+  if(typeof canvas!=='undefined'&&canvas){
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){ if(_raf===null){_raf=requestAnimationFrame(tick);} }
+      else { if(_raf!==null){cancelAnimationFrame(_raf);_raf=null;} }
+    }),{threshold:0}).observe(canvas);
+  }
   window.addEventListener('resize',()=>{
     W=wrap.clientWidth;H=wrap.clientHeight||W;
     renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
@@ -243,7 +259,7 @@ revealEls.forEach(el=>revObs.observe(el));
   const wrap=canvas.parentElement;
   let W=wrap.clientWidth,H=wrap.clientHeight||W;
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
   renderer.setClearColor(0,0);
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(48,W/H,.1,100);
@@ -307,8 +323,9 @@ revealEls.forEach(el=>revObs.observe(el));
   },{passive:true});
 
   let t=0;
-  (function tick(){
-    requestAnimationFrame(tick);t+=.014;
+  let _raf=null,_inView=true;
+  function tick(){
+    _raf=requestAnimationFrame(tick);t+=.014;
     if(!isDrag){velX*=.92;velY*=.92;rotX+=velX;rotY+=velY;rotX=Math.max(-.55,Math.min(.7,rotX))}
     if(!isDrag&&Math.abs(velX)<.001&&Math.abs(velY)<.001)rotY+=.007;
     group.rotation.x=rotX;group.rotation.y=rotY;
@@ -318,7 +335,14 @@ revealEls.forEach(el=>revObs.observe(el));
     });
     key.intensity=5+Math.sin(t*.7)*.6;
     renderer.render(scene,camera);
-  })();
+  }
+  _raf=requestAnimationFrame(tick);
+  if(typeof canvas!=='undefined'&&canvas){
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){ if(_raf===null){_raf=requestAnimationFrame(tick);} }
+      else { if(_raf!==null){cancelAnimationFrame(_raf);_raf=null;} }
+    }),{threshold:0}).observe(canvas);
+  }
   window.addEventListener('resize',()=>{
     W=wrap.clientWidth;H=wrap.clientHeight||W;
     renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
@@ -335,7 +359,7 @@ function initShowcaseCanvas(){
   if(!canvas||!section)return;
   let W=window.innerWidth,H=window.innerHeight;
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
   renderer.setClearColor(0x18182A,1);
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(50,W/H,.1,100);
@@ -424,8 +448,9 @@ function initShowcaseCanvas(){
   let lastStep=-1;
 
   let t=0;
-  (function tick(){
-    requestAnimationFrame(tick);t+=.013;
+  let _raf=null,_inView=true;
+  function tick(){
+    _raf=requestAnimationFrame(tick);t+=.013;
     const rect=section.getBoundingClientRect();
     const totalH=section.offsetHeight-window.innerHeight;
     const scrolled=Math.max(0,Math.min(1,-rect.top/totalH));
@@ -460,7 +485,14 @@ function initShowcaseCanvas(){
     fillLight.intensity=2.8+Math.cos(t*.4)*.4;
 
     renderer.render(scene,camera);
-  })();
+  }
+  _raf=requestAnimationFrame(tick);
+  if(typeof canvas!=='undefined'&&canvas){
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){ if(_raf===null){_raf=requestAnimationFrame(tick);} }
+      else { if(_raf!==null){cancelAnimationFrame(_raf);_raf=null;} }
+    }),{threshold:0}).observe(canvas);
+  }
   window.addEventListener('resize',()=>{
     W=window.innerWidth;H=window.innerHeight;
     renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
@@ -477,7 +509,7 @@ function initCtaCanvas(){
   const wrap=canvas.parentElement;
   let W=wrap.clientWidth,H=wrap.clientHeight||500;
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
   renderer.setClearColor(0,0);
   const scene=new THREE.Scene();
   const camera=new THREE.PerspectiveCamera(60,W/H,.1,100);
@@ -505,8 +537,9 @@ function initCtaCanvas(){
   const p1=new THREE.PointLight(0xFF5A2C,3.5,36);p1.position.set(0,6,7);scene.add(p1);
   const p2=new THREE.PointLight(0x8B6FE8,2.8,28);p2.position.set(-10,-5,4);scene.add(p2);
   let ct=0;
-  (function tick(){
-    requestAnimationFrame(tick);ct+=.012;
+  let _raf=null,_inView=true;
+  function tick(){
+    _raf=requestAnimationFrame(tick);ct+=.012;
     scene.children.forEach(m=>{
       if(m.userData.ry!==undefined){
         m.rotation.y+=m.userData.ry;m.rotation.x+=m.userData.rx;
@@ -515,7 +548,14 @@ function initCtaCanvas(){
     });
     p1.position.x=Math.cos(ct*.7)*8;p1.position.y=Math.sin(ct*.5)*6;
     renderer.render(scene,camera);
-  })();
+  }
+  _raf=requestAnimationFrame(tick);
+  if(typeof canvas!=='undefined'&&canvas){
+    new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting){ if(_raf===null){_raf=requestAnimationFrame(tick);} }
+      else { if(_raf!==null){cancelAnimationFrame(_raf);_raf=null;} }
+    }),{threshold:0}).observe(canvas);
+  }
   window.addEventListener('resize',()=>{
     W=wrap.clientWidth;H=wrap.clientHeight||500;
     renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
