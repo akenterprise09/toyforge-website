@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ToyForge Studio — Premium Educational Toys</title>
 
-<!-- Preconnect to speed up font + CDN script fetches -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -13,11 +12,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Site styles (external, cacheable) -->
 <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
-
 
 <div id="cursor-glow"></div>
 
@@ -39,12 +36,14 @@
   <a href="#video-section">Products</a>
   <a href="#features">Why Us</a>
   <a href="#showcase">Design</a>
+  <a href="#stats">Impact</a>
   <a href="#cta" style="background:linear-gradient(115deg,#FF5A2C,#FF8235);color:#fff;padding:.5rem 1.3rem;border-radius:50px;font-weight:700;text-align:center">Get Yours →</a>
 </div>
 
 <!-- HERO -->
 <section id="hero">
-  
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-vignette"></div>
   <div class="hero-content">
     <div class="hero-eyebrow"><span class="hero-dot"></span>Award-Winning Educational Toys</div>
     <h1 class="hero-title">
@@ -71,7 +70,7 @@
 <!-- VIDEO-DRIVEN PRODUCT PANELS -->
 <div id="video-section">
 
-  <!-- PANEL 1: SHAPE SORTER — shapes video -->
+  <!-- PANEL 1: SHAPE SORTER -->
   <div class="video-panel">
     <video class="vp-video lazy-video" muted loop playsinline preload="none"
            poster="assets/posters/shape-sorter-panel-poster.jpg"
@@ -105,11 +104,15 @@
         </div>
         <a href="#" class="vp-cta-btn btn-coral">Shop Sort Master →</a>
       </div>
-      
+      <div class="vp-3d-zone">
+        <canvas id="toy1-canvas"></canvas>
+        <div class="toy-badge-new tb-coral"><span class="bp"></span>New Arrival</div>
+        <div class="toy-hint"><span class="hint-icon">👆</span>Drag to rotate</div>
+      </div>
     </div>
   </div>
 
-  <!-- PANEL 2: ABACUS — abacus video -->
+  <!-- PANEL 2: COLOR SLIDE -->
   <div class="video-panel">
     <video class="vp-video lazy-video" muted loop playsinline preload="none"
            poster="assets/posters/color-slide-panel-poster.jpg"
@@ -142,7 +145,11 @@
         </div>
         <a href="#" class="vp-cta-btn btn-purple">Shop Color Slide →</a>
       </div>
-      
+      <div class="vp-3d-zone">
+        <canvas id="toy2-canvas"></canvas>
+        <div class="toy-badge-new tb-purple"><span class="bp"></span>Bestseller</div>
+        <div class="toy-hint"><span class="hint-icon">👆</span>Drag to rotate</div>
+      </div>
     </div>
   </div>
 
@@ -257,13 +264,11 @@
   </div>
 </footer>
 
-<!-- Third-party libraries: deferred so they don't block first paint -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
-<!-- Site script (external, cacheable) -->
 <script src="js/main.min.js" defer></script>
 </body>
 </html>
