@@ -73,10 +73,9 @@
 
   <!-- PANEL 1: SHAPE SORTER — shapes video -->
   <div class="video-panel">
-    <video class="vp-video" autoplay muted loop playsinline preload="auto">
-      <source src="assets/videos/shape-sorter-panel.webm" type="video/webm">
-      <source src="assets/videos/shape-sorter-panel.mp4" type="video/mp4">
-    </video>
+    <video class="vp-video lazy-video" muted loop playsinline preload="none"
+           poster="assets/posters/shape-sorter-panel-poster.jpg"
+           data-src="assets/videos/shape-sorter-panel.mp4"></video>
     <div class="vp-overlay"></div>
     <div class="vp-content">
       <div class="vp-text reveal-l">
@@ -112,10 +111,9 @@
 
   <!-- PANEL 2: ABACUS — abacus video -->
   <div class="video-panel">
-    <video class="vp-video" autoplay muted loop playsinline preload="metadata">
-      <source src="assets/videos/color-slide-panel.webm" type="video/webm">
-      <source src="assets/videos/color-slide-panel.mp4" type="video/mp4">
-    </video>
+    <video class="vp-video lazy-video" muted loop playsinline preload="none"
+           poster="assets/posters/color-slide-panel-poster.jpg"
+           data-src="assets/videos/color-slide-panel.mp4"></video>
     <div class="vp-overlay"></div>
     <div class="vp-content">
       <div class="vp-text reveal-r">
@@ -186,10 +184,9 @@
 <!-- SCROLL SHOWCASE -->
 <section id="showcase" style="padding:0">
   <div class="showcase-sticky">
-    <video id="showcase-video" autoplay muted loop playsinline preload="metadata">
-      <source src="assets/videos/showcase-loop.webm" type="video/webm">
-      <source src="assets/videos/showcase-loop.mp4" type="video/mp4">
-    </video>
+    <video id="showcase-video" class="lazy-video" muted loop playsinline preload="none"
+           poster="assets/posters/showcase-loop-poster.jpg"
+           data-src="assets/videos/showcase-loop.mp4"></video>
     <canvas id="showcase-canvas"></canvas>
     <div class="showcase-vignette"></div>
     <div class="showcase-overlay">

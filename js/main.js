@@ -71,7 +71,7 @@ revealEls.forEach(el=>revObs.observe(el));
     new THREE.SphereGeometry(.3,12,12),
   ];
   const particles=[];
-  for(let i=0;i<55;i++){
+  for(let i=0;i<26;i++){
     const m=new THREE.Mesh(
       geos[i%geos.length],
       new THREE.MeshPhongMaterial({
@@ -491,7 +491,7 @@ revealEls.forEach(el=>revObs.observe(el));
     new THREE.CylinderGeometry(.35,.35,.18,6),
     new THREE.TorusGeometry(.32,.1,8,20),
   ];
-  for(let i=0;i<40;i++){
+  for(let i=0;i<20;i++){
     const m=new THREE.Mesh(
       geos[i%geos.length],
       new THREE.MeshPhongMaterial({color:palette[i%6],opacity:.2+Math.random()*.3,transparent:true,shininess:90})
@@ -576,47 +576,42 @@ if(typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined'){
     scrollTrigger:{trigger:'#cta',start:'top 70%'}});
 }
 
-/* ════════ VIDEO AUTOPLAY RELIABILITY FIX ════════
-   Some browsers (iOS Safari w/ Low Power Mode or Reduce Motion,
-   some Android WebViews) silently block <video autoplay> even
-   when muted+playsinline are set. Force-play via JS, retry on
-   user interaction, and play/pause based on visibility so videos
-   never get stuck on a frozen first frame. */
+/* ════════ LAZY VIDEO LOADING ════════
+   Videos only download + start playing once they actually scroll
+   into view. Poster image shows instantly so nothing looks frozen
+   or blank while loading. Pauses (and frees decode work) when
+   scrolled out of view. This is the main fix for page lag — the
+   browser is never forced to download/decode 3 videos at once. */
 (function(){
-  const vids = document.querySelectorAll('video');
+  const vids = document.querySelectorAll('.lazy-video');
   if(!vids.length) return;
 
   function tryPlay(v){
-    v.muted = true;          // ensure the property (not just attribute) is set
-    v.defaultMuted = true;
+    v.muted = true;
     v.playsInline = true;
     const p = v.play();
-    if(p && p.catch){ p.catch(()=>{ /* will retry below */ }); }
+    if(p && p.catch) p.catch(()=>{});
   }
 
-  vids.forEach(v=>{
-    tryPlay(v);
-    v.addEventListener('loadeddata', ()=>tryPlay(v));
-    v.addEventListener('canplay', ()=>tryPlay(v));
-  });
-
-  // Retry on first user interaction (covers strict autoplay blocks)
-  ['touchstart','click','scroll','keydown'].forEach(evt=>{
-    window.addEventListener(evt, ()=>vids.forEach(tryPlay), {once:true, passive:true});
-  });
-
-  // Play only when in view, pause when scrolled away (saves battery,
-  // and re-triggers play reliably when panel scrolls into frame)
   const vidObs = new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
-      if(entry.isIntersecting) tryPlay(entry.target);
-      else entry.target.pause();
+      const v = entry.target;
+      if(entry.isIntersecting){
+        if(!v.src && v.dataset.src){ v.src = v.dataset.src; }
+        tryPlay(v);
+      } else {
+        v.pause();
+      }
     });
-  }, {threshold:.15});
+  }, {threshold:.15, rootMargin:'200px 0px'});
+
   vids.forEach(v=>vidObs.observe(v));
 
-  // If tab becomes visible again, resume
+  ['touchstart','click'].forEach(evt=>{
+    window.addEventListener(evt, ()=>vids.forEach(v=>{ if(v.src) tryPlay(v); }), {once:true, passive:true});
+  });
+
   document.addEventListener('visibilitychange', ()=>{
-    if(!document.hidden) vids.forEach(tryPlay);
+    if(!document.hidden) vids.forEach(v=>{ if(v.src) tryPlay(v); });
   });
 })();
