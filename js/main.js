@@ -329,7 +329,7 @@ revealEls.forEach(el=>revObs.observe(el));
    SCROLL SHOWCASE — shape-sorter assembly (dark section)
    Video texture underneath + Three.js assembly on top
 ════════════════════════════════════ */
-(function(){
+function initShowcaseCanvas(){
   const section=document.getElementById('showcase');
   const canvas=document.getElementById('showcase-canvas');
   if(!canvas||!section)return;
@@ -465,12 +465,13 @@ revealEls.forEach(el=>revObs.observe(el));
     W=window.innerWidth;H=window.innerHeight;
     renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
   });
-})();
+}
+if('requestIdleCallback' in window){requestIdleCallback(initShowcaseCanvas,{timeout:2000});}else{setTimeout(initShowcaseCanvas,400);}
 
 /* ════════════════════════════════════
    CTA CANVAS — toy shape particle cloud
 ════════════════════════════════════ */
-(function(){
+function initCtaCanvas(){
   const canvas=document.getElementById('cta-canvas');
   if(!canvas)return;
   const wrap=canvas.parentElement;
@@ -519,7 +520,8 @@ revealEls.forEach(el=>revObs.observe(el));
     W=wrap.clientWidth;H=wrap.clientHeight||500;
     renderer.setSize(W,H);camera.aspect=W/H;camera.updateProjectionMatrix();
   });
-})();
+}
+if('requestIdleCallback' in window){requestIdleCallback(initCtaCanvas,{timeout:2500});}else{setTimeout(initCtaCanvas,600);}
 
 /* ════════════════════════════════════
    GSAP SCROLL ANIMATIONS
