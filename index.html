@@ -2,16 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ToyForge Studio — Premium Educational Toys</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
@@ -33,14 +28,14 @@
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#video-section">Products</a>
-  <a href="#features">Why Us</a>
-  <a href="#showcase">Design</a>
-  <a href="#stats">Impact</a>
-  <a href="#cta" style="background:linear-gradient(115deg,#FF5A2C,#FF8235);color:#fff;padding:.5rem 1.3rem;border-radius:50px;font-weight:700;text-align:center">Get Yours →</a>
+  <a href="#video-section" onclick="this.closest('#mobileMenu').classList.remove('open')">Products</a>
+  <a href="#features"      onclick="this.closest('#mobileMenu').classList.remove('open')">Why Us</a>
+  <a href="#showcase"      onclick="this.closest('#mobileMenu').classList.remove('open')">Design</a>
+  <a href="#stats"         onclick="this.closest('#mobileMenu').classList.remove('open')">Impact</a>
+  <a href="#cta" class="mobile-cta" onclick="this.closest('#mobileMenu').classList.remove('open')">Get Yours →</a>
 </div>
 
-<!-- HERO -->
+<!-- ═══ HERO ═══ -->
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
   <div class="hero-vignette"></div>
@@ -53,7 +48,7 @@
     <p class="hero-sub">Handcrafted 3D puzzles and sorting toys designed to spark curiosity, build motor skills, and bring joy to every child aged 2–8.</p>
     <div class="hero-btns">
       <a href="#video-section" class="btn btn-fill">Explore Toys ↓</a>
-      <a href="#showcase" class="btn btn-ghost">See the Craft</a>
+      <a href="#showcase"      class="btn btn-ghost">See the Craft</a>
     </div>
   </div>
   <div class="scroll-cue">
@@ -62,19 +57,18 @@
   </div>
 </section>
 
-<!-- MARQUEE -->
+<!-- ═══ MARQUEE ═══ -->
 <div class="marquee-band">
   <div class="marquee-track" id="marqueeTrack"></div>
 </div>
 
-<!-- VIDEO-DRIVEN PRODUCT PANELS -->
+<!-- ═══ PRODUCT PANELS ═══ -->
 <div id="video-section">
 
-  <!-- PANEL 1: SHAPE SORTER -->
+  <!-- PANEL 1 : Shape Sorter -->
   <div class="video-panel">
-    <video class="vp-video lazy-video" muted loop playsinline preload="none"
-           poster="assets/posters/shape-sorter-panel-poster.jpg"
-           data-src="assets/videos/shape-sorter-panel.mp4"></video>
+    <!-- Animated canvas background (replaces video on mobile) -->
+    <canvas class="panel-bg-canvas" id="bg1-canvas"></canvas>
     <div class="vp-overlay"></div>
     <div class="vp-content">
       <div class="vp-text reveal-l">
@@ -82,28 +76,17 @@
         <h2 class="vp-title">Geometric<br>Sort Master</h2>
         <p class="vp-desc">Five shape families — hexagon, circle, triangle, square, and diamond — each with brilliantly coloured stacking pieces. Develops shape recognition, fine motor control, and early STEM thinking in children aged 2–5.</p>
         <div class="vp-tags">
-          <span class="tag">Ages 2–5</span>
-          <span class="tag">Montessori</span>
-          <span class="tag">STEM</span>
-          <span class="tag">FSC Wood</span>
-          <span class="tag">Non-Toxic Paint</span>
+          <span class="tag">Ages 2–5</span><span class="tag">Montessori</span>
+          <span class="tag">STEM</span><span class="tag">FSC Wood</span><span class="tag">Non-Toxic Paint</span>
         </div>
-        <div class="vp-stats" style="margin-bottom:2rem">
-          <div class="vps-item">
-            <span class="vps-n nc">5</span>
-            <span class="vps-l">Shape Families</span>
-          </div>
-          <div class="vps-item">
-            <span class="vps-n nc">18</span>
-            <span class="vps-l">Pieces</span>
-          </div>
-          <div class="vps-item">
-            <span class="vps-n nc">EN71</span>
-            <span class="vps-l">Certified</span>
-          </div>
+        <div class="vp-stats">
+          <div class="vps-item"><span class="vps-n nc">5</span><span class="vps-l">Shape Families</span></div>
+          <div class="vps-item"><span class="vps-n nc">18</span><span class="vps-l">Pieces</span></div>
+          <div class="vps-item"><span class="vps-n nc">EN71</span><span class="vps-l">Certified</span></div>
         </div>
         <a href="#" class="vp-cta-btn btn-coral">Shop Sort Master →</a>
       </div>
+      <!-- 3-D interactive toy -->
       <div class="vp-3d-zone">
         <canvas id="toy1-canvas"></canvas>
         <div class="toy-badge-new tb-coral"><span class="bp"></span>New Arrival</div>
@@ -112,36 +95,23 @@
     </div>
   </div>
 
-  <!-- PANEL 2: COLOR SLIDE -->
-  <div class="video-panel">
-    <video class="vp-video lazy-video" muted loop playsinline preload="none"
-           poster="assets/posters/color-slide-panel-poster.jpg"
-           data-src="assets/videos/color-slide-panel.mp4"></video>
+  <!-- PANEL 2 : Color Slide -->
+  <div class="video-panel panel-alt">
+    <canvas class="panel-bg-canvas" id="bg2-canvas"></canvas>
     <div class="vp-overlay"></div>
     <div class="vp-content">
       <div class="vp-text reveal-r">
         <div class="vp-eyebrow e-purple">Logic &amp; Color</div>
         <h2 class="vp-title">Color Slide<br>Puzzle</h2>
-        <p class="vp-desc">Twelve chunky disc-beads threaded on four vertical rails inside a vivid yellow frame. Match the pattern cards, freestyle, or race the clock. Auto-sliding animation shows you the magic in motion — numbers, colours, and spatial logic all at once.</p>
+        <p class="vp-desc">Twelve chunky disc-beads threaded on four vertical rails inside a vivid yellow frame. Match pattern cards, freestyle, or race the clock. Builds colour recognition, pattern logic, and counting skills.</p>
         <div class="vp-tags">
-          <span class="tag">Ages 3–7</span>
-          <span class="tag">Pattern Matching</span>
-          <span class="tag">Color Logic</span>
-          <span class="tag">BPA-Free ABS</span>
+          <span class="tag">Ages 3–7</span><span class="tag">Pattern Matching</span>
+          <span class="tag">Color Logic</span><span class="tag">BPA-Free ABS</span>
         </div>
-        <div class="vp-stats" style="margin-bottom:2rem">
-          <div class="vps-item">
-            <span class="vps-n np">12</span>
-            <span class="vps-l">Bead Discs</span>
-          </div>
-          <div class="vps-item">
-            <span class="vps-n np">4</span>
-            <span class="vps-l">Rail Colors</span>
-          </div>
-          <div class="vps-item">
-            <span class="vps-n np">24</span>
-            <span class="vps-l">Pattern Cards</span>
-          </div>
+        <div class="vp-stats">
+          <div class="vps-item"><span class="vps-n np">12</span><span class="vps-l">Bead Discs</span></div>
+          <div class="vps-item"><span class="vps-n np">4</span><span class="vps-l">Rail Colors</span></div>
+          <div class="vps-item"><span class="vps-n np">24</span><span class="vps-l">Pattern Cards</span></div>
         </div>
         <a href="#" class="vp-cta-btn btn-purple">Shop Color Slide →</a>
       </div>
@@ -155,72 +125,51 @@
 
 </div>
 
-<!-- FEATURES -->
+<!-- ═══ FEATURES ═══ -->
 <section id="features">
   <div class="sec-wrap">
     <div class="sec-head reveal">
       <span class="sec-eye">Our Promise</span>
       <h2 class="sec-title">Built Different</h2>
-      <p class="sec-sub">Every decision, from material to geometry, is made with your child's development and safety in mind.</p>
+      <p class="sec-sub">Every decision — from material to geometry — is made with your child's development and safety in mind.</p>
     </div>
     <div class="feat-grid">
-      <div class="feat-card reveal delay1">
-        <div class="feat-icon fi1">🌲</div>
-        <div class="feat-title">FSC-Certified Wood</div>
-        <p class="feat-desc">Our sorting boards are milled from sustainably managed forests and finished with non-toxic, child-safe water-based lacquers.</p>
-      </div>
-      <div class="feat-card reveal delay2">
-        <div class="feat-icon fi2">🧠</div>
-        <div class="feat-title">Developmental Design</div>
-        <p class="feat-desc">Each toy is co-designed with early-years educators to target shape recognition, sequencing, and spatial reasoning milestones.</p>
-      </div>
-      <div class="feat-card reveal delay3">
-        <div class="feat-icon fi3">⭐</div>
-        <div class="feat-title">Award-Winning Quality</div>
-        <p class="feat-desc">Winner of the Toy Industry Association's Innovation Award three years running. EN71 and ASTM F963 certified globally.</p>
-      </div>
-      <div class="feat-card reveal delay4">
-        <div class="feat-icon fi4">🔄</div>
-        <div class="feat-title">Lifetime Guarantee</div>
-        <p class="feat-desc">If a shape cracks, a peg warps, or a bead breaks under normal play, we replace it — no questions asked.</p>
-      </div>
+      <div class="feat-card reveal delay1"><div class="feat-icon fi1">🌲</div><div class="feat-title">FSC-Certified Wood</div><p class="feat-desc">Milled from sustainably managed forests and finished with non-toxic, child-safe water-based lacquers.</p></div>
+      <div class="feat-card reveal delay2"><div class="feat-icon fi2">🧠</div><div class="feat-title">Developmental Design</div><p class="feat-desc">Co-designed with early-years educators to target shape recognition, sequencing, and spatial reasoning milestones.</p></div>
+      <div class="feat-card reveal delay3"><div class="feat-icon fi3">⭐</div><div class="feat-title">Award-Winning Quality</div><p class="feat-desc">Toy Industry Innovation Award three years running. EN71 and ASTM F963 certified globally.</p></div>
+      <div class="feat-card reveal delay4"><div class="feat-icon fi4">🔄</div><div class="feat-title">Lifetime Guarantee</div><p class="feat-desc">If a shape cracks or a bead breaks under normal play, we replace it — no questions asked.</p></div>
     </div>
   </div>
 </section>
 
-<!-- SCROLL SHOWCASE -->
-<section id="showcase" style="padding:0">
+<!-- ═══ SHOWCASE (scroll-driven) ═══ -->
+<section id="showcase">
   <div class="showcase-sticky">
-    <video id="showcase-video" class="lazy-video" muted loop playsinline preload="none"
-           poster="assets/posters/showcase-loop-poster.jpg"
-           data-src="assets/videos/showcase-loop.mp4"></video>
     <canvas id="showcase-canvas"></canvas>
     <div class="showcase-vignette"></div>
     <div class="showcase-overlay">
       <span class="showcase-eyebrow" id="sc-eye">Craftsmanship</span>
       <h2 class="showcase-title" id="sc-title">Every Piece, Perfected</h2>
-      <p class="showcase-desc" id="sc-desc">Scroll to watch our Shape Sort Master assemble — from raw board to finished masterpiece.</p>
+      <p class="showcase-desc"  id="sc-desc">Scroll to watch our Shape Sort Master assemble — from raw board to finished masterpiece.</p>
       <div class="progress-dots" id="sc-dots">
-        <div class="pdot active" data-i="0"></div>
-        <div class="pdot" data-i="1"></div>
-        <div class="pdot" data-i="2"></div>
-        <div class="pdot" data-i="3"></div>
+        <div class="pdot active"></div><div class="pdot"></div>
+        <div class="pdot"></div><div class="pdot"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
+<!-- ═══ STATS ═══ -->
 <section id="stats">
   <div class="stats-row">
-    <div class="stat reveal"><span class="stat-n">28</span><span class="stat-l">Countries</span></div>
-    <div class="stat reveal delay1"><span class="stat-n">140K+</span><span class="stat-l">Happy Families</span></div>
-    <div class="stat reveal delay2"><span class="stat-n">8</span><span class="stat-l">Industry Awards</span></div>
-    <div class="stat reveal delay3"><span class="stat-n">100%</span><span class="stat-l">Non-Toxic</span></div>
+    <div class="stat reveal">        <span class="stat-n">28</span>   <span class="stat-l">Countries</span></div>
+    <div class="stat reveal delay1"> <span class="stat-n">140K+</span> <span class="stat-l">Happy Families</span></div>
+    <div class="stat reveal delay2"> <span class="stat-n">8</span>     <span class="stat-l">Industry Awards</span></div>
+    <div class="stat reveal delay3"> <span class="stat-n">100%</span>  <span class="stat-l">Non-Toxic</span></div>
   </div>
 </section>
 
-<!-- CTA -->
+<!-- ═══ CTA ═══ -->
 <section id="cta">
   <canvas id="cta-canvas"></canvas>
   <div class="cta-inner reveal">
@@ -228,47 +177,39 @@
     <p class="cta-sub">Join over 140,000 families who chose ToyForge for their children's first shapes, colours, and logic adventures.</p>
     <div class="cta-btns">
       <a href="#video-section" class="btn btn-fill">Shop Collection →</a>
-      <a href="#" class="btn btn-ghost" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff">Gift a Set</a>
+      <a href="#" class="btn btn-dark">Gift a Set</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
   <div class="foot-top">
     <div class="foot-brand">
       <a href="#" class="foot-logo"><span class="logo-mark">🧩</span>ToyForge</a>
-      <p>Handcrafting joy since 2016. Premium educational toys trusted by families and educators across 28 countries.</p>
+      <p>Handcrafting joy since 2016. Trusted by families and educators across 28 countries.</p>
     </div>
-    <div class="foot-col">
-      <div class="foot-col-title">Products</div>
-      <a href="#">Sort Master</a><a href="#">Color Slide</a><a href="#">Stacking Rings</a><a href="#">Bead Mazes</a>
-    </div>
-    <div class="foot-col">
-      <div class="foot-col-title">Company</div>
-      <a href="#">About Us</a><a href="#">Careers</a><a href="#">Press Kit</a><a href="#">Sustainability</a>
-    </div>
-    <div class="foot-col">
-      <div class="foot-col-title">Support</div>
-      <a href="#">FAQ</a><a href="#">Returns</a><a href="#">Guarantee</a><a href="#">Contact</a>
-    </div>
+    <div class="foot-col"><div class="foot-col-title">Products</div>
+      <a href="#">Sort Master</a><a href="#">Color Slide</a><a href="#">Stacking Rings</a><a href="#">Bead Mazes</a></div>
+    <div class="foot-col"><div class="foot-col-title">Company</div>
+      <a href="#">About Us</a><a href="#">Careers</a><a href="#">Press Kit</a><a href="#">Sustainability</a></div>
+    <div class="foot-col"><div class="foot-col-title">Support</div>
+      <a href="#">FAQ</a><a href="#">Returns</a><a href="#">Guarantee</a><a href="#">Contact</a></div>
   </div>
   <div class="foot-bottom">
     <p class="foot-copy">© 2025 ToyForge Studio. Crafting joy since 2016.</p>
     <div class="socials">
-      <a href="#" class="soc" title="Instagram">📸</a>
-      <a href="#" class="soc" title="Pinterest">📌</a>
-      <a href="#" class="soc" title="YouTube">▶️</a>
-      <a href="#" class="soc" title="LinkedIn">💼</a>
+      <a href="#" class="soc">📸</a><a href="#" class="soc">📌</a>
+      <a href="#" class="soc">▶️</a><a href="#" class="soc">💼</a>
     </div>
   </div>
 </footer>
 
+<!-- Scripts — defer so DOM is ready -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
-
 <script src="js/main.min.js" defer></script>
 </body>
 </html>
