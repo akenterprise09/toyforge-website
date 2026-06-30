@@ -575,3 +575,48 @@ if(typeof gsap!=='undefined'&&typeof ScrollTrigger!=='undefined'){
   gsap.from('.cta-btns',{y:20,opacity:0,duration:1,delay:.35,ease:'power3.out',
     scrollTrigger:{trigger:'#cta',start:'top 70%'}});
 }
+
+/* ════════ VIDEO AUTOPLAY RELIABILITY FIX ════════
+   Some browsers (iOS Safari w/ Low Power Mode or Reduce Motion,
+   some Android WebViews) silently block <video autoplay> even
+   when muted+playsinline are set. Force-play via JS, retry on
+   user interaction, and play/pause based on visibility so videos
+   never get stuck on a frozen first frame. */
+(function(){
+  const vids = document.querySelectorAll('video');
+  if(!vids.length) return;
+
+  function tryPlay(v){
+    v.muted = true;          // ensure the property (not just attribute) is set
+    v.defaultMuted = true;
+    v.playsInline = true;
+    const p = v.play();
+    if(p && p.catch){ p.catch(()=>{ /* will retry below */ }); }
+  }
+
+  vids.forEach(v=>{
+    tryPlay(v);
+    v.addEventListener('loadeddata', ()=>tryPlay(v));
+    v.addEventListener('canplay', ()=>tryPlay(v));
+  });
+
+  // Retry on first user interaction (covers strict autoplay blocks)
+  ['touchstart','click','scroll','keydown'].forEach(evt=>{
+    window.addEventListener(evt, ()=>vids.forEach(tryPlay), {once:true, passive:true});
+  });
+
+  // Play only when in view, pause when scrolled away (saves battery,
+  // and re-triggers play reliably when panel scrolls into frame)
+  const vidObs = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) tryPlay(entry.target);
+      else entry.target.pause();
+    });
+  }, {threshold:.15});
+  vids.forEach(v=>vidObs.observe(v));
+
+  // If tab becomes visible again, resume
+  document.addEventListener('visibilitychange', ()=>{
+    if(!document.hidden) vids.forEach(tryPlay);
+  });
+})();
